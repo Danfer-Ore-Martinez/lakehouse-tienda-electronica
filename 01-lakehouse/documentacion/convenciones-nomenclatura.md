@@ -66,3 +66,10 @@ Este documento describe las convenciones de nomenclatura utilizadas para schemas
   - `dlh_`: Prefijo creado especifícamente para la meta-data generada por el sistema.  
   - `<nombre_columna>`: Describe el nombre del contenido que esta columna representa.  
   - Ejemplo: `dlh_fecha_carga` → Columna que genera el sistema para indicar en que fecha se cargo ese registro.
+
+  ### **Stored Procedure**
+  - Todos los Stored Procedure comienzan con el prefijo `sp`, seguido del nombre que explica el objetivo del proceso almacenado. 
+  - **`sp_<nombre_stored_procedure>`**
+    - `sp`: Prefijo creado especifícamente para poder identificar al sp.
+    - `<nombre_stored_procedure>`: Describe la accion que realiza en sp.
+    - Ejemplo `sp_actualizar_ultima_carga` → Stored Procedure que se encarga de actualizar la fecha de ultima carga. 
