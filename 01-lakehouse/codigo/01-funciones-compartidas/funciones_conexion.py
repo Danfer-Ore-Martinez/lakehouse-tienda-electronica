@@ -13,7 +13,7 @@ def obtener_ruta(capa: str)->str:
     ARGS
     ----
         capa (str): Tipo de capa a la que se quiere acceder.
-    RETRUN
+    RETURN
     ------
         ruta_data (str): Ruta del ADLSG2 correspondiente a la capa.
     """
