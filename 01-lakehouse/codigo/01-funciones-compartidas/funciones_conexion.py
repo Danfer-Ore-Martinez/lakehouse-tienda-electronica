@@ -28,7 +28,7 @@ def obtener_ruta(capa: str)->str:
         case "cuarentena":
             ruta_data = ruta_ADLSG2 + ("cuarentena")
         case "recurso":
-            ruta_data = ruta_ADLSG2 + ("cuarentena")
+            ruta_data = ruta_ADLSG2 + ("recurso")
         case _:
             raise ValueError("Valor de capa no aceptado, se espera (bronce/plata/oro/cuarentena)")
         
