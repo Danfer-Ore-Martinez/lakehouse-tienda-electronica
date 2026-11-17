@@ -9,6 +9,7 @@ Este documento describe las convenciones de nomenclatura utilizadas para schemas
    - [Reglas Capa Bronce](#Reglas-Capa-Bronce)
    - [Reglas Capa Plata](#Reglas-Capa-Plata)
    - [Reglas Capa Oro](#Reglas-Capa-Oro)
+   - [Reglas Tablas Técnicas](#Reglas-Tablas-Técnicas)
 3. [Convenciones de Nomenclatura para Columnas](#Convenciones-de-Nomenclatura-para-Columnas)
    - [Llaves Sustitutas](#Llaves-Sustitutas)
    - [Columnas Técnicas](#Columnas-Técnicas)
@@ -20,6 +21,7 @@ Este documento describe las convenciones de nomenclatura utilizadas para schemas
 - **Convenciones de Nomenclatura**: Usar snake_case y todo en minusculas.
 - **Idioma**: Usar Español para los nombres de tablas, columnas, carpetas y archivos, sin embargo, las capas bronce y plata tendrán los nombres de los recursos originales.
 - **Sobre las Palabras Reservadas**: No utilizar palabras reservadas de PySpark o SQLSpark.
+---
 
 ## **Convenciones de Nomenclatura para Tablas**
 
@@ -51,6 +53,14 @@ Este documento describe las convenciones de nomenclatura utilizadas para schemas
 | `dim_`      | Tabla de Dimension               | `dim_clientes`, `dim_productos`           |
 | `fact_`     | Tabla de Fact                    | `fact_pagos`                              |
 
+### **Reglas Tablas Técnicas**
+- Aplica para todas las capas anteriormente específicadas .
+- **`dlh_<propósito>`**
+  - `dlh_`: Prefijo creado especifícamente para identificar que es una columna técnica.  
+  - `<propósito>`: Describe el propósito de la tabla. 
+  - Ejemplo: `dlh_marca_ultima_carga` → Tabla creada para poder específicar la marca de última carga en el pipeline
+---
+
 ## **Convenciones de Nomenclatura para Columnas**
 
 ### **Llaves Sustitutas**  
@@ -66,3 +76,11 @@ Este documento describe las convenciones de nomenclatura utilizadas para schemas
   - `dlh_`: Prefijo creado especifícamente para la meta-data generada por el sistema.  
   - `<nombre_columna>`: Describe el nombre del contenido que esta columna representa.  
   - Ejemplo: `dlh_fecha_carga` → Columna que genera el sistema para indicar en que fecha se cargo ese registro.
+---
+
+## **Stored Procedure**
+- Todos los Stored Procedure comienzan con el prefijo `sp`, seguido del nombre que explica el objetivo del proceso almacenado. 
+- **`sp_<nombre_stored_procedure>`**
+  - `sp`: Prefijo creado especifícamente para poder identificar al sp.
+  - `<nombre_stored_procedure>`: Describe la accion que realiza en sp.
+  - Ejemplo `sp_actualizar_ultima_carga` → Stored Procedure que se encarga de actualizar la fecha de ultima carga. 
