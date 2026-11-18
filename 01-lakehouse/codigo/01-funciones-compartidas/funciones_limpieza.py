@@ -1,12 +1,12 @@
 from pyspark.sql import SparkSession, functions as F, types as T, Window as W
-from pyspark.sql.functions import *
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.column import Column
 
 def perfilar_data_frame(df: DataFrame) -> DataFrame:
     """"
-    Esta funcion se encarga de crear un perfilado del Data Frame.
-
+    Esta funcion se encarga de crear un perfilado del Data Frame
+    ------------------------------------------------------------
+    
     Argumentos 
     ----------
         df (DataFrame): Data frame sobre el cuál se quiere realizar un perfilado de datos.
@@ -205,7 +205,7 @@ from pyspark.sql import functions as F
 def generar_hash(df: DataFrame, columnas_hash: list[str], nombre_hash: str) -> DataFrame:
     """
     ESTA FUNCION SE ENCARGA DE GENERAR UN HASH A PARTIR DE UNA LISTA DE COLUMNAS
-    -----------------------------------------------------------------------
+    ----------------------------------------------------------------------------
         
     Argumentos
     ----------
@@ -249,6 +249,6 @@ def generar_hash(df: DataFrame, columnas_hash: list[str], nombre_hash: str) -> D
         F.sha2(contenido, 256)
     )
 
-def fecha_de_corte_data():
+def fecha_de_corte_data() :
     """Retorna la fecha de corte dinámica usando la fecha actual del sistema."""
     return F.current_timestamp()
