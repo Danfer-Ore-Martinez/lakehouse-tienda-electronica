@@ -1,7 +1,9 @@
 """
 CREACION DE FUNCIONES DE CONEXION
+----------------------------------
 
-PROPOSTIO DEL SCRIPT:
+PROPOSTIO DEL SCRIPT
+--------------------
     El script tiene como proposito, crear funciones de conexion para cada capa de datos, para que sea mas facil de mantener y actualizar.
 """
 ruta_ADLSG2 = "abfss://almacenamiento-capas-dlh-nova-shoop@alma0dlh0nova0shop.dfs.core.windows.net/"
@@ -17,6 +19,9 @@ def obtener_ruta(capa: str)->str:
     ------
         ruta_data (str): Ruta del ADLSG2 correspondiente a la capa.
     """
+    if not isinstance(capa, str):
+        raise TypeError("El parametro capa debe ser un string")
+    
     capa = capa.lower().strip()
     match capa:
         case "bronce":
@@ -30,6 +35,6 @@ def obtener_ruta(capa: str)->str:
         case "recurso":
             ruta_data = ruta_ADLSG2 + ("recurso")
         case _:
-            raise ValueError("Valor de capa no aceptado, se espera (bronce/plata/oro/cuarentena)")
+            raise ValueError("Valor de capa no aceptado, se espera (bronce/plata/oro/cuarentena/recurso)")
         
     return ruta_data

@@ -1,12 +1,20 @@
+"""
+FUNCIONES DE LIMPIEZA DE DATOS
+------------------------------
+
+PROPOSITO DEL SCRIPT
+--------------------
+    Funciones compartidas que se utilizan para la limpieza de datos. 
+"""
 from pyspark.sql import SparkSession, functions as F, types as T, Window as W
-from pyspark.sql.functions import *
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.column import Column
 
 def perfilar_data_frame(df: DataFrame) -> DataFrame:
     """"
-    Esta funcion se encarga de crear un perfilado del Data Frame.
-
+    Esta funcion se encarga de crear un perfilado del Data Frame
+    ------------------------------------------------------------
+    
     Argumentos 
     ----------
         df (DataFrame): Data frame sobre el cuál se quiere realizar un perfilado de datos.
@@ -35,6 +43,9 @@ def perfilar_data_frame(df: DataFrame) -> DataFrame:
         |   'edad'     |  'int'  |    1  |     50      |    2     | 22  |  22  |
         |--------------|---------|-------|-------------|----------|-----|------|
     """
+    if not isinstance(df, DataFrame):
+        raise TypeError("El argumento df debe ser un DataFrame de Spark")
+    
     resultados = []
     
     for nombre, tipo in df.dtypes:
@@ -122,6 +133,8 @@ def limpiar_texto(columna: Column)->Column:
         limpiar_texto(df.recurso)
         >>> ["App", "CRM Hhrr", "Web")
     """
+    if not isinstance(columna, Column):
+        raise TypeError("El argumento columna debe ser un Column de Spark")
     conectores = {
         "de", "del", "la", "las", "el", "los",
         "y", "e", "o", "u", "a", "en", "con",
@@ -184,6 +197,8 @@ def estandarizar_columnas_str(df: DataFrame) -> DataFrame:
         | 'N/A'      |  'N/A'         |
         |------------|----------------|
     """
+    if not isinstance(df, DataFrame):
+        raise TypeError("El argumento df debe ser un DataFrame de Spark")
     df_limpio = df 
     for nombre, tipo in df_limpio.dtypes:
 
@@ -205,7 +220,7 @@ from pyspark.sql import functions as F
 def generar_hash(df: DataFrame, columnas_hash: list[str], nombre_hash: str) -> DataFrame:
     """
     ESTA FUNCION SE ENCARGA DE GENERAR UN HASH A PARTIR DE UNA LISTA DE COLUMNAS
-    -----------------------------------------------------------------------
+    ----------------------------------------------------------------------------
         
     Argumentos
     ----------
@@ -233,7 +248,15 @@ def generar_hash(df: DataFrame, columnas_hash: list[str], nombre_hash: str) -> D
         | "    "     |      "-"       | 129456f2c05794b16571f07e5198583e66362dfbec62710c782b56098175bf0c|
         |------------|----------------|-----------------------------------------------------------------|
     """
+    if not isinstance(df, DataFrame):
+        raise TypeError("El argumento df debe ser un DataFrame de Spark")
 
+    if not all(isinstance(c, str) for c in columnas_hash):
+        raise TypeError("El argumento columnas_hash debe ser una lista de columnas de tipo string")
+    
+    if not isinstance(nombre_hash, str):
+        raise TypeError("El argumento nombre_hash debe ser un string")
+    
     contenido = F.to_json(
         F.struct(
             *[
@@ -249,6 +272,6 @@ def generar_hash(df: DataFrame, columnas_hash: list[str], nombre_hash: str) -> D
         F.sha2(contenido, 256)
     )
 
-def fecha_de_corte_data():
+def fecha_de_corte_data() :
     """Retorna la fecha de corte dinámica usando la fecha actual del sistema."""
     return F.current_timestamp()
