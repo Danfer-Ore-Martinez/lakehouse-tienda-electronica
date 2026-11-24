@@ -16,7 +16,7 @@ def obtener_ventana_fechas_carga_id(
     tabla_df: DataFrame,
     nombre_tabla: str,
     nombre_schema_tabla_actualizacion: str
-    ) -> tuple[datetime, datetime,Row|None, str|None]:
+    ) -> tuple[datetime, datetime,Row|None, str|None,DataFrame]:
     """
      ultima_fecha_actualizacion, maxima_fecha,resumen_carga,ventana_carga_id 
     
@@ -43,7 +43,7 @@ def obtener_ventana_fechas_carga_id(
 
     RESULTADO
     ---------
-    Tupla (ultima_fecha_actualizacion, maxima_fecha, resumen_carga, ventana_carga_id):
+    Tupla (ultima_fecha_actualizacion, maxima_fecha, resumen_carga, ventana_carga_id, tabla_df):
     - ultima_fecha_actualizacion: último watermark procesado en la tabla de control
       (None si la tabla nunca se ha cargado -> la primera carga procesa TODO).
     - maxima_fecha: fecha máxima de dlh_fecha_ingesta en la tabla ingresada (None si la tabla esta vacia).
@@ -51,10 +51,11 @@ def obtener_ventana_fechas_carga_id(
       (ambos None si la ventana quedó vacia: no hay datos nuevos que procesar).
     - ventana_carga_id: predicado "dlh_carga_id >= min AND dlh_carga_id <= max" listo
       para .option("replaceWhere", ...), o None si no hay nada que escribir.
+    - tabla_df: tabla de recursos ya leida, con el filtro aplicado para la ventana.
 
     EJEMPLO
     -------
-    ultima_fecha, max_fecha, resumen, ventana = obtener_ventana_fechas_carga_id(
+    ultima_fecha, max_fecha, resumen, ventana, bronce_customers = obtener_ventana_fechas_carga_id(
         spark=spark,
         tabla_df=bronce_customers,
         nombre_tabla="customers",
@@ -115,7 +116,7 @@ def obtener_ventana_fechas_carga_id(
             f"dlh_carga_id  >= {resumen_carga['id_min']}"
             f" AND dlh_carga_id <= {resumen_carga['id_max']}"
         )
-    return ultima_fecha_actualizacion, maxima_fecha,resumen_carga,ventana_carga_id 
+    return ultima_fecha_actualizacion, maxima_fecha,resumen_carga,ventana_carga_id, tabla_df
 
 
 def actualizar_fechas_id_carga(
